@@ -1,7 +1,10 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
@@ -14,7 +17,7 @@ public class ContactHelper extends HelperBase {
        click(By.xpath("//div[@id='content']/form/input[21]"));
    }
 
-   public void fillContactFrom(ContactData contactData) {
+   public void fillContactForm(ContactData contactData, boolean creation) {
       type(By.name("firstname"), contactData.getName());
       type(By.name("lastname"), contactData.getLastname());
       type(By.name("nickname"), contactData.getNick());
@@ -25,6 +28,13 @@ public class ContactHelper extends HelperBase {
       type(By.name("homepage"), contactData.getHomepage());
       type(By.name("byear"), contactData.getYear());
       type(By.name("address2"), contactData.getAddress());
+
+      if (creation) {
+         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } else {
+         Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
+
    }
 
    public void initContactCreation() {
@@ -32,7 +42,7 @@ public class ContactHelper extends HelperBase {
    }
 
    public void initContactModification() {
-      click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+      click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a"));
    }
 
    public void submitContactModification() {
