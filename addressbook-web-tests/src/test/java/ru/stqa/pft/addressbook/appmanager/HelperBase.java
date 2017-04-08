@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
-import java.util.concurrent.TimeUnit;
-
 public class HelperBase {
 
    protected WebDriver wd;
