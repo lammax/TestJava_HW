@@ -9,7 +9,7 @@ import java.util.List;
 public class ContactDeletionTests extends TestBase {
 
    @Test
-   public void ContactDeletionTests() {
+   public void testContactDeletion() {
       app.clickAllert();
 
       if (!(app.getContactHelper().isThereAContact())) {
@@ -26,6 +26,9 @@ public class ContactDeletionTests extends TestBase {
       List<ContactData> after = app.getContactHelper().getContactList();
 
       Assert.assertEquals(after.size(), before.size() - 1);
+
+      before.remove(before.size() - 1);
+      Assert.assertEquals(before, after);
    }
 
 }
