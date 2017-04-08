@@ -4,8 +4,11 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
+
+import java.util.*;
 
 public class ContactHelper extends HelperBase {
 
@@ -72,5 +75,28 @@ public class ContactHelper extends HelperBase {
 
    public int getContactCount() {
       return wd.findElements(By.name("selected[]")).size();
+   }
+
+   public List<ContactData> getContactList() {
+
+      List<ContactData> contacts = new ArrayList<ContactData>();
+
+      List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
+
+      for(WebElement e : elements) {
+//         ContactData(String name, String lastname, String nick, String company, String mobile, String email, String homepage, String year, String address, String title, String group)
+         List<WebElement> tds = e.findElements(By.cssSelector("td"));
+         String lastname = tds.get(1).getAttribute("textContent");
+         String firstname = tds.get(2).getAttribute("textContent");
+         String email = tds.get(4).findElement(By.cssSelector("a")).getAttribute("textContent");
+         String phone = tds.get(5).getAttribute("textContent");
+
+         ContactData contact = new ContactData(firstname, lastname, null, null, phone, email, null, null,null, null, null);
+         contacts.add(contact);
+      }
+
+      return contacts;
+
+
    }
 }
