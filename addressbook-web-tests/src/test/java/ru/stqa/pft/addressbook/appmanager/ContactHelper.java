@@ -41,16 +41,19 @@ public class ContactHelper extends HelperBase {
       click(By.linkText("add new"));
    }
 
-   public void initContactModification() {
-      click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a"));
+   public void initContactModification(int index) {
+      wd.findElements(By.cssSelector("img[title='Edit']")).get(index).click();
    }
 
    public void submitContactModification() {
       click(By.xpath("//div[@id='content']/form[1]/input[22]"));
    }
 
-   public void selectContact() {
-      click(By.name("selected[]"));
+   public void selectContact(int index) {
+      wd.findElements(By.name("selected[]")).get(index).click();
+      /*click(
+        (By.cssSelector("input[name='selected[]']:nth-child(" + (index+1) + ")"))
+      );*/
    }
 
    public void submitContactDeletion() {
