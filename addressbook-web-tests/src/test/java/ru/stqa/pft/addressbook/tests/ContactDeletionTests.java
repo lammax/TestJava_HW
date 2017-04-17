@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
@@ -8,26 +9,40 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-   @Test
-   public void testContactDeletion() {
+   @BeforeMethod
+   public void ensurePreconditions() {
       app.clickAllert();
 
-      if (!(app.getContactHelper().isThereAContact())) {
-         app.getContactHelper().createContact(new ContactData("username", "userlastname", "uu", "Home", "54245245245", "user@mailserver.com", "http://somewhere.com", "1985", "address", "Mr", "test1"));
+      if (app.contact().list().size() == 0) {
+         app.contact().create(new ContactData()
+                 .withName("username")
+                 .withLastname("userlastname")
+                 .withNick("uu")
+                 .withCompany("Home")
+                 .withMobile("54245245245")
+                 .withEmail("user@mailserver.com")
+                 .withHomepage("http://somewhere.com")
+                 .withYear("1985")
+                 .withAddress("address")
+                 .withTitle("Mr")
+                 .withGroup("test1"));
       }
+   }
 
-      List<ContactData> before = app.getContactHelper().getContactList();
+   @Test
+   public void testContactDeletion() {
+      List<ContactData> before = app.contact().list();
+      int index = before.size() - 1;
 
-      app.getContactHelper().selectContact(before.size() - 1);
-      app.getContactHelper().submitContactDeletion();
+      app.contact().delete(index);
       app.clickAllert();
       app.goTo().gotoHomePage();
 
-      List<ContactData> after = app.getContactHelper().getContactList();
+      List<ContactData> after = app.contact().list();
 
-      Assert.assertEquals(after.size(), before.size() - 1);
+      Assert.assertEquals(after.size(), index);
 
-      before.remove(before.size() - 1);
+      before.remove(index);
       Assert.assertEquals(before, after);
    }
 

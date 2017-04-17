@@ -1,48 +1,18 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-   private int id;
-   private final String name;
-   private final String lastname;
-   private final String nick;
-   private final String company;
-   private final String mobile;
-   private final String email;
-   private final String homepage;
-   private final String year;
-   private final String address;
-   private final String title;
+   private int id = Integer.MAX_VALUE;;
+   private String name;
+   private String lastname;
+   private String nick;
+   private String company;
+   private String mobile;
+   private String email;
+   private String homepage;
+   private String year;
+   private String address;
+   private String title;
    private String group;
-
-   public ContactData(String name, String lastname, String nick, String company, String mobile, String email, String homepage, String year, String address, String title, String group) {
-      this.id = Integer.MAX_VALUE;
-      this.name = name;
-      this.lastname = lastname;
-      this.nick = nick;
-      this.company = company;
-      this.mobile = mobile;
-      this.email = email;
-      this.homepage = homepage;
-      this.year = year;
-      this.address = address;
-      this.title = title;
-      this.group = group;
-   }
-
-   public ContactData(int id, String name, String lastname, String nick, String company, String mobile, String email, String homepage, String year, String address, String title, String group) {
-      this.id = id;
-      this.name = name;
-      this.lastname = lastname;
-      this.nick = nick;
-      this.company = company;
-      this.mobile = mobile;
-      this.email = email;
-      this.homepage = homepage;
-      this.year = year;
-      this.address = address;
-      this.title = title;
-      this.group = group;
-   }
 
    public String getName() {
       return name;
@@ -88,12 +58,68 @@ public class ContactData {
       return group;
    }
 
-   public void setId(int id) {
-      this.id = id;
-   }
-
    public int getId() {
       return id;
+   }
+
+   public ContactData withId(int id) {
+      this.id = id;
+      return this;
+   }
+
+   public ContactData withName(String name) {
+      this.name = name;
+      return this;
+   }
+
+   public ContactData withLastname(String lastname) {
+      this.lastname = lastname;
+      return this;
+   }
+
+   public ContactData withNick(String nick) {
+      this.nick = nick;
+      return this;
+   }
+
+   public ContactData withCompany(String company) {
+      this.company = company;
+      return this;
+   }
+
+   public ContactData withMobile(String mobile) {
+      this.mobile = mobile;
+      return this;
+   }
+
+   public ContactData withEmail(String email) {
+      this.email = email;
+      return this;
+   }
+
+   public ContactData withHomepage(String homepage) {
+      this.homepage = homepage;
+      return this;
+   }
+
+   public ContactData withYear(String year) {
+      this.year = year;
+      return this;
+   }
+
+   public ContactData withAddress(String address) {
+      this.address = address;
+      return this;
+   }
+
+   public ContactData withTitle(String title) {
+      this.title = title;
+      return this;
+   }
+
+   public ContactData withGroup(String group) {
+      this.group = group;
+      return this;
    }
 
    @Override

@@ -67,13 +67,24 @@ public class ContactHelper extends HelperBase {
       return isElementPresent(By.name("selected[]"));
    }
 
-   public void createContact(ContactData contact) {
+   public void create(ContactData contact) {
       initContactCreation();
       fillContactForm(contact, true);
       submitContactCreation();
    }
 
-   public List<ContactData> getContactList() {
+   public void modify(ContactData contactModify) {
+      fillContactForm(contactModify, false);
+      submitContactModification();
+   }
+
+   public void delete(int index) {
+      selectContact(index);
+      submitContactDeletion();
+   }
+
+
+   public List<ContactData> list() {
 
       List<ContactData> contacts = new ArrayList<ContactData>();
 
@@ -88,8 +99,13 @@ public class ContactHelper extends HelperBase {
          String email = tds.get(4).findElement(By.cssSelector("a")).getAttribute("textContent");
          String phone = tds.get(5).getAttribute("textContent");
 
-         ContactData contact = new ContactData(id, firstname, lastname, null, null, phone, email, null, null,null, null, null);
-         contacts.add(contact);
+         contacts.add(new ContactData()
+           .withId(id)
+           .withName(firstname)
+           .withLastname(lastname)
+           .withMobile(phone)
+           .withEmail(email)
+         );
       }
 
       return contacts;
