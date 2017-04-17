@@ -7,8 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -44,8 +45,8 @@ public class ContactHelper extends HelperBase {
       click(By.linkText("add new"));
    }
 
-   public void initContactModification(int index) {
-      wd.findElements(By.cssSelector("img[title='Edit']")).get(index).click();
+   public void initContactModification(ContactData contact) {
+      wd.findElement(By.cssSelector("a[href$='edit.php?id=" + contact.getId() + "']")).click();
    }
 
    public void submitContactModification() {
@@ -54,10 +55,12 @@ public class ContactHelper extends HelperBase {
 
    public void selectContact(int index) {
       wd.findElements(By.name("selected[]")).get(index).click();
-      /*click(
-        (By.cssSelector("input[name='selected[]']:nth-child(" + (index+1) + ")"))
-      );*/
    }
+
+   private void selectContactById(int id) {
+      wd.findElement(By.cssSelector("input[value='" + id+ "']")).click();
+   }
+
 
    public void submitContactDeletion() {
       click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
@@ -78,15 +81,13 @@ public class ContactHelper extends HelperBase {
       submitContactModification();
    }
 
-   public void delete(int index) {
-      selectContact(index);
+   public void delete(ContactData contact) {
+      selectContactById(contact.getId());
       submitContactDeletion();
    }
 
-
-   public List<ContactData> list() {
-
-      List<ContactData> contacts = new ArrayList<ContactData>();
+   public Set<ContactData> all() {
+      Set<ContactData> contacts = new HashSet<ContactData>();
 
       List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
 
@@ -100,16 +101,15 @@ public class ContactHelper extends HelperBase {
          String phone = tds.get(5).getAttribute("textContent");
 
          contacts.add(new ContactData()
-           .withId(id)
-           .withName(firstname)
-           .withLastname(lastname)
-           .withMobile(phone)
-           .withEmail(email)
+                 .withId(id)
+                 .withName(firstname)
+                 .withLastname(lastname)
+                 .withMobile(phone)
+                 .withEmail(email)
          );
       }
 
       return contacts;
-
-
    }
+
 }

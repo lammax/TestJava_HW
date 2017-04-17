@@ -23,8 +23,6 @@ public class GroupCreationTests extends TestBase {
 
       Assert.assertEquals(after.size(), before.size() + 1);
 
-      group.withId(after.stream().max(Comparator.comparingInt(GroupData::getId)).get().getId());
-
       group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
 
       before.add(group);

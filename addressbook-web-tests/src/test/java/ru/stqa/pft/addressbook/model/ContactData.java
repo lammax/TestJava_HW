@@ -129,18 +129,14 @@ public class ContactData {
 
       ContactData that = (ContactData) o;
 
-      if (name != null ? !name.equals(that.name) : that.name != null) return false;
-      if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-      if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
-      return email != null ? email.equals(that.email) : that.email == null;
+      if (id != that.id) return false;
+      return name != null ? name.equals(that.name) : that.name == null;
    }
 
    @Override
    public int hashCode() {
-      int result = name != null ? name.hashCode() : 0;
-      result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-      result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
-      result = 31 * result + (email != null ? email.hashCode() : 0);
+      int result = id;
+      result = 31 * result + (name != null ? name.hashCode() : 0);
       return result;
    }
 
