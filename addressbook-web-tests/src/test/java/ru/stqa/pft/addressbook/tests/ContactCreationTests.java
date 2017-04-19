@@ -30,13 +30,41 @@ public class ContactCreationTests extends TestBase {
 
         app.contact().create(contact);
 
-        Contacts after = app.contact().all();
+        assertThat(app.contact().count(), equalTo(before.size() + 1));
 
-        assertThat(after.size(), equalTo(before.size() + 1));
+        Contacts after = app.contact().all();
 
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))
         ));
+    }
+
+    @Test
+    public void testBadContactCreation() {
+        app.goTo().gotoHomePage();
+
+        Contacts before = app.contact().all();
+
+        ContactData contact = new ContactData()
+                .withName("username456'")
+                .withLastname("userlastname")
+                .withNick("uu")
+                .withCompany("Home")
+                .withMobile("54245245245")
+                .withEmail("user@mailserver.com")
+                .withHomepage("http://somewhere.com")
+                .withYear("1985")
+                .withAddress("address")
+                .withTitle("Mr")
+                .withGroup("test1");
+
+        app.contact().create(contact);
+
+        assertThat(app.contact().count(), equalTo(before.size()));
+
+        Contacts after = app.contact().all();
+
+        assertThat(after, equalTo(before));
     }
 
 }
