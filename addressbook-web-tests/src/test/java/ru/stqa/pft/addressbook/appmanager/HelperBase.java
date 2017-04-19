@@ -27,6 +27,9 @@ public class HelperBase {
       }
    }
 
+   protected String getValue(By locator) {
+      return wd.findElement(locator).getAttribute("value");
+   }
 
    protected boolean isElementPresent(By locator) {
       try {

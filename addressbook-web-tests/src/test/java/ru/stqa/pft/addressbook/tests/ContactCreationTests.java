@@ -11,7 +11,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
-        app.goTo().gotoHomePage();
+        app.goTo().homePage();
 
         Contacts before = app.contact().all();
 
@@ -41,7 +41,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testBadContactCreation() {
-        app.goTo().gotoHomePage();
+        app.goTo().homePage();
 
         Contacts before = app.contact().all();
 

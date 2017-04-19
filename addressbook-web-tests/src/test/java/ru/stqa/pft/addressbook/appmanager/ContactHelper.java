@@ -45,7 +45,7 @@ public class ContactHelper extends HelperBase {
    }
 
    public void initContactModification(ContactData contact) {
-      wd.findElement(By.cssSelector("a[href$='edit.php?id=" + contact.getId() + "']")).click();
+      initContactModificationById(contact.getId());
    }
 
    public void submitContactModification() {
@@ -123,5 +123,20 @@ public class ContactHelper extends HelperBase {
 
    public int count() {
       return wd.findElements(By.name("selected[]")).size();
+   }
+
+   public ContactData infoFromEditForm(ContactData contact) {
+      initContactModificationById(contact.getId());
+      String firstName = getValue(By.name("firstname"));
+      String lastName = getValue(By.name("lastname"));
+      String mobile = getValue(By.name("mobile"));
+
+      wd.navigate().back();
+
+      return new ContactData().withId(contact.getId()).withName(firstName).withLastname(lastName).withMobile(mobile);
+   }
+
+   private void initContactModificationById(int id) {
+      wd.findElement(By.cssSelector(String.format("a[href$='edit.php?id=$s']", id))).click();
    }
 }
