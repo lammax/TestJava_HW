@@ -26,7 +26,9 @@ public class ContactHelper extends HelperBase {
       type(By.name("nickname"), contactData.getNick());
       type(By.name("company"), contactData.getCompany());
       type(By.name("title"), contactData.getTitle());
+      type(By.name("home"), contactData.getHomeTel());
       type(By.name("mobile"), contactData.getMobile());
+      type(By.name("work"), contactData.getWorkTel());
       type(By.name("email"), contactData.getEmail());
       type(By.name("homepage"), contactData.getHomepage());
       type(By.name("byear"), contactData.getYear());
@@ -107,13 +109,15 @@ public class ContactHelper extends HelperBase {
          String lastname = tds.get(1).getAttribute("textContent");
          String firstname = tds.get(2).getAttribute("textContent");
          String email = tds.get(4).findElement(By.cssSelector("a")).getAttribute("textContent");
-         String phone = tds.get(5).getAttribute("textContent");
+         String[] phones = tds.get(5).getText().split("\n");
 
          contactCache.add(new ContactData()
                  .withId(id)
                  .withName(firstname)
                  .withLastname(lastname)
-                 .withMobile(phone)
+                 .withHomeTel(phones[0])
+                 .withMobile(phones[1])
+                 .withWorkTel(phones[2])
                  .withEmail(email)
          );
       }
@@ -129,14 +133,16 @@ public class ContactHelper extends HelperBase {
       initContactModificationById(contact.getId());
       String firstName = getValue(By.name("firstname"));
       String lastName = getValue(By.name("lastname"));
+      String homeTel = getValue(By.name("home"));
       String mobile = getValue(By.name("mobile"));
+      String workTel = getValue(By.name("work"));
 
       wd.navigate().back();
 
-      return new ContactData().withId(contact.getId()).withName(firstName).withLastname(lastName).withMobile(mobile);
+      return new ContactData().withId(contact.getId()).withName(firstName).withLastname(lastName).withHomeTel(homeTel).withMobile(mobile).withWorkTel(workTel);
    }
 
    private void initContactModificationById(int id) {
-      wd.findElement(By.cssSelector(String.format("a[href$='edit.php?id=$s']", id))).click();
+      wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
    }
 }

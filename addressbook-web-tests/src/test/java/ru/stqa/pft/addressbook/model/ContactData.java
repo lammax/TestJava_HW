@@ -7,12 +7,22 @@ public class ContactData {
    private String nick;
    private String company;
    private String mobile;
+   private String homeTel;
+   private String workTel;
    private String email;
    private String homepage;
    private String year;
    private String address;
    private String title;
    private String group;
+
+   public String getHomeTel() {
+      return homeTel;
+   }
+
+   public String getWorkTel() {
+      return workTel;
+   }
 
    public String getName() {
       return name;
@@ -89,6 +99,16 @@ public class ContactData {
 
    public ContactData withMobile(String mobile) {
       this.mobile = mobile;
+      return this;
+   }
+
+   public ContactData withHomeTel(String homeTel) {
+      this.homeTel = homeTel;
+      return this;
+   }
+
+   public ContactData withWorkTel(String workTel) {
+      this.workTel = workTel;
       return this;
    }
 
