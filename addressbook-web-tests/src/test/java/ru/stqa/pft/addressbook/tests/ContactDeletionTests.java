@@ -21,7 +21,7 @@ public class ContactDeletionTests extends TestBase {
                  .withNick("uu")
                  .withCompany("Home")
                  .withMobile("54245245245")
-                 .withEmail("user@mailserver.com")
+                 .withEmail1("user@mailserver.com")
                  .withHomepage("http://somewhere.com")
                  .withYear("1985")
                  .withAddress("address")
