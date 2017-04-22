@@ -4,16 +4,20 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = true)
     public void testContactCreation() {
         app.goTo().homePage();
 
         Contacts before = app.contact().all();
+
+        File photo = new File("./src/test/resources/seagal.jpg");
 
         ContactData contact = new ContactData()
             .withName("username456")
@@ -26,7 +30,8 @@ public class ContactCreationTests extends TestBase {
             .withYear("1985")
             .withAddress("address")
             .withTitle("Mr")
-            .withGroup("test1");
+            .withGroup("test1")
+            .withPhoto(photo);
 
         app.contact().create(contact);
 
@@ -39,7 +44,7 @@ public class ContactCreationTests extends TestBase {
         ));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testBadContactCreation() {
         app.goTo().homePage();
 
@@ -55,8 +60,7 @@ public class ContactCreationTests extends TestBase {
                 .withHomepage("http://somewhere.com")
                 .withYear("1985")
                 .withAddress("address")
-                .withTitle("Mr")
-                .withGroup("test1");
+                .withTitle("Mr");
 
         app.contact().create(contact);
 
