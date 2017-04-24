@@ -1,0 +1,41 @@
+<list>
+  <contact>
+    <name>username 1</name>
+    <lastname>userlastname 1</lastname>
+    <nick>mick 1</nick>
+    <company>Company 1</company>
+    <mobile>54245245245 1</mobile>
+    <emaill>user1@mailserver.com</emaill>
+    <homepage>http://somewhere1.com</homepage>
+    <year>1981</year>
+    <address>address 1</address>
+    <title>Mr</title>
+    <group>test1</group>
+  </contact>
+  <contact>
+    <name>username 2</name>
+    <lastname>userlastname 2</lastname>
+    <nick>mick 2</nick>
+    <company>Company 2</company>
+    <mobile>54245245245 2</mobile>
+    <emaill>user2@mailserver.com</emaill>
+    <homepage>http://somewhere2.com</homepage>
+    <year>1982</year>
+    <address>address 2</address>
+    <title>Mr</title>
+    <group>test2</group>
+  </contact>
+  <contact>
+    <name>username 3</name>
+    <lastname>userlastname 3</lastname>
+    <nick>mick 3</nick>
+    <company>Company 3</company>
+    <mobile>54245245245 3</mobile>
+    <emaill>user3@mailserver.com</emaill>
+    <homepage>http://somewhere3.com</homepage>
+    <year>1983</year>
+    <address>address 3</address>
+    <title>Mr</title>
+    <group>test3</group>
+  </contact>
+</list>

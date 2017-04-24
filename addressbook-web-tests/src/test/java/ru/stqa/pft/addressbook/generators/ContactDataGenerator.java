@@ -57,9 +57,9 @@ public class ContactDataGenerator {
       Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
       String json = gson.toJson(contacts);
 
-      Writer writer = new FileWriter(file);
-      writer.write(json);
-      writer.close();
+      try (Writer writer = new FileWriter(file)) {
+         writer.write(json);
+      }
 
    }
 
@@ -69,20 +69,19 @@ public class ContactDataGenerator {
       xstream.processAnnotations(ContactData.class);
       String xml = xstream.toXML(contacts);
 
-      Writer writer = new FileWriter(file);
-      writer.write(xml);
-      writer.close();
+      try (Writer writer = new FileWriter(file)) {
+         writer.write(xml);
+      }
 
    }
 
    private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
 
-      Writer writer = new FileWriter(file);
-      for (ContactData contact : contacts) {
-         writer.write(String.format("%s;%s;%s\n", contact.getName(), contact.getLastname(), contact.getNick()));
+      try (Writer writer = new FileWriter(file)) {
+         for (ContactData contact : contacts) {
+            writer.write(String.format("%s;%s;%s\n", contact.getName(), contact.getLastname(), contact.getNick()));
+         }
       }
-
-      writer.close();
 
    }
 

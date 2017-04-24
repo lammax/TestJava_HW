@@ -1,0 +1,41 @@
+[
+  {
+    "name": "username 1",
+    "lastname": "userlastname 1",
+    "nick": "mick 1",
+    "company": "Company 1",
+    "mobile": "54245245245 1",
+    "emaill": "user1@mailserver.com",
+    "homepage": "http://somewhere1.com",
+    "year": "1981",
+    "address": "address 1",
+    "title": "Mr",
+    "group": "test1"
+  },
+  {
+    "name": "username 2",
+    "lastname": "userlastname 2",
+    "nick": "mick 2",
+    "company": "Company 2",
+    "mobile": "54245245245 2",
+    "emaill": "user2@mailserver.com",
+    "homepage": "http://somewhere2.com",
+    "year": "1982",
+    "address": "address 2",
+    "title": "Mr",
+    "group": "test2"
+  },
+  {
+    "name": "username 3",
+    "lastname": "userlastname 3",
+    "nick": "mick 3",
+    "company": "Company 3",
+    "mobile": "54245245245 3",
+    "emaill": "user3@mailserver.com",
+    "homepage": "http://somewhere3.com",
+    "year": "1983",
+    "address": "address 3",
+    "title": "Mr",
+    "group": "test3"
+  }
+]
