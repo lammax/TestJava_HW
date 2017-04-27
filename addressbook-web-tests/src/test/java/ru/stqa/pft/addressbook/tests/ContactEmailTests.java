@@ -30,7 +30,7 @@ public class ContactEmailTests extends TestBase {
                  .withYear("1985")
                  .withAddress("address")
                  .withTitle("Mr")
-                 .withGroup("test1")
+//                 .withGroup("test1")
                  .withPhoto(new File(app.properties().getProperty("web.photo")))
          );
       }

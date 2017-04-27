@@ -7,7 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -69,6 +70,9 @@ public class ContactData {
    @Transient
    private String allEmails;
 
+   @Transient
+   private String allFIO;
+
    @Expose
    @Column(name = "homepage")
    @Type(type = "text")
@@ -89,14 +93,24 @@ public class ContactData {
 //   @Type(type = "text")
    private String title;
 
-   @Expose
-   @Transient
-   private String group;
 
    @Expose
    @Column(name = "photo")
    @Type(type = "text")
    private String photo;
+
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name="address_in_groups",
+           joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id")
+   )
+   private Set<GroupData> groups = new HashSet<GroupData>();
+
+   public String getAllFIO() {
+      if (allFIO == null) {
+         allFIO = Stream.of(name, lastname).filter((e) -> !e.equals("")).collect(Collectors.joining(" "));
+      }
+      return allFIO;
+   }
 
    public File getPhoto() {
       return new File(photo);
@@ -114,6 +128,10 @@ public class ContactData {
          allPhones = Stream.of(homeTel, mobile, workTel).filter((t) -> !t.equals("")).collect(Collectors.joining("\n"));
       }
       return allPhones;
+   }
+
+   public Groups getGroups() {
+      return new Groups(groups);
    }
 
    public String getHomeTel() {
@@ -170,10 +188,6 @@ public class ContactData {
 
    public String getTitle() {
       return title;
-   }
-
-   public String getGroup() {
-      return group;
    }
 
    public int getId() {
@@ -259,11 +273,6 @@ public class ContactData {
       return this;
    }
 
-   public ContactData withGroup(String group) {
-      this.group = group;
-      return this;
-   }
-
    public ContactData withAllPhones(String allPhones) {
       this.allPhones = allPhones;
       return this;
@@ -273,6 +282,17 @@ public class ContactData {
       this.photo = photo.getAbsolutePath();
       return this;
    }
+
+   public ContactData inGroup(GroupData group) {
+      this.groups.add(group);
+      return this;
+   }
+
+   public ContactData withAllFIO(String allFIO) {
+      this.allFIO = allFIO;
+      return this;
+   }
+
 
    @Override
    public boolean equals(Object o) {

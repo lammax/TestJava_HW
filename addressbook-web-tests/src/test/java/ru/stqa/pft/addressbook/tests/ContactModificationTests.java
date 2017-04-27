@@ -27,7 +27,7 @@ public class ContactModificationTests extends TestBase {
                  .withYear("1985")
                  .withAddress("address")
                  .withTitle("Mr")
-                 .withGroup("test1")
+//                 .withGroup("test1")
                  .withPhoto(new File(app.properties().getProperty("web.photo")))
          );
       }
@@ -58,11 +58,13 @@ public class ContactModificationTests extends TestBase {
        app.contact().modify(contact);
        app.goTo().homePage();
 
-       assertThat(app.contact().count(), equalTo(before.size()));
+       assertThat(app.db().contacts().size(), equalTo(before.size()));
 
        Contacts after = app.db().contacts();
 
        assertThat(before, equalTo(after.without(contact).withAdded(modifiedContact)));
+
+       verifyContactListInUI();
     }
 
 }

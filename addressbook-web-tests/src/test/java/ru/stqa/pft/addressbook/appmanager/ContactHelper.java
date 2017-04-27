@@ -8,7 +8,9 @@ import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ContactHelper extends HelperBase {
@@ -24,20 +26,15 @@ public class ContactHelper extends HelperBase {
    public void fillContactForm(ContactData contactData, boolean creation) {
       type(By.name("firstname"), contactData.getName());
       type(By.name("lastname"), contactData.getLastname());
-      type(By.name("nickname"), contactData.getNick());
-      type(By.name("company"), contactData.getCompany());
-      type(By.name("title"), contactData.getTitle());
-      type(By.name("home"), contactData.getHomeTel());
       type(By.name("mobile"), contactData.getMobile());
-      type(By.name("work"), contactData.getWorkTel());
       type(By.name("email"), contactData.getEmaill());
-      type(By.name("homepage"), contactData.getHomepage());
-      type(By.name("byear"), contactData.getYear());
-      type(By.name("address2"), contactData.getAddress());
-      attach(By.name("photo"), contactData.getPhoto());
+      type(By.name("address"), contactData.getAddress());
 
       if (creation) {
-         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+         if (contactData.getGroups().size() > 0) {
+            Assert.assertTrue(contactData.getGroups().size() == 1);
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGroupName());
+         }
       } else {
          Assert.assertFalse(isElementPresent(By.name("new_group")));
       }
@@ -160,5 +157,35 @@ public class ContactHelper extends HelperBase {
 
    private void initContactModificationById(int id) {
       wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+   }
+
+   public ContactData infoFromDetailedForm(ContactData chosenOne) {
+
+      openContactDetailedFormById(chosenOne);
+
+      //allFIO(firstname, lastname), address, allEmail, allPhones
+
+      /*username 2 userlastname 2
+      address2
+      M: 542452452452
+      user2@mailserver.com*/
+
+      List<String> allDetailedInfo = Arrays.stream(wd.findElement(By.cssSelector("div[id='content']")).getText().split("[\\r\\n]+")).collect(Collectors.toList());
+
+      String allFio = allDetailedInfo.get(0);
+      String address = allDetailedInfo.get(1);
+      String mobile = allDetailedInfo.get(2).substring(3);
+      String email1 = allDetailedInfo.get(3);
+
+      return new ContactData()
+              .withAllFIO(allFio)
+              .withAddress(address)
+              .withAllEmails(email1)
+              .withAllPhones(mobile);
+
+   }
+
+   private void openContactDetailedFormById(ContactData chosenOne) {
+      wd.findElement(By.cssSelector("a[href='view.php?id=" + chosenOne.getId() + "']")).click();
    }
 }

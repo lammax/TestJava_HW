@@ -95,16 +95,9 @@ public class ContactDataGenerator {
          contacts.add(new ContactData()
                  .withName(String.format("username %s", i))
                  .withLastname(String.format("userlastname %s", i))
-                 .withNick(String.format("mick%s", i))
-                 .withCompany(String.format("Company%s", i))
                  .withMobile(String.format("54245245245%s", i))
                  .withEmail1(String.format("user%s@mailserver.com", i))
-                 .withHomepage(String.format("http://somewhere%s.com",i))
-                 .withYear(String.format("198%s", i))
                  .withAddress(String.format("address%s", i))
-                 .withTitle("Mr")
-                 .withGroup(String.format("test %s", i))
-                 .withPhoto(new File("seagal.jpg"))
          );
       }
 

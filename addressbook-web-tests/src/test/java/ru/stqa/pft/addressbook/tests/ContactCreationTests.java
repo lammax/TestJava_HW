@@ -3,10 +3,13 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +23,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
+
+    @BeforeMethod
+    public void ensureGroupsPreconditions() {
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test1").withHeader("header1").withFooter("footer1"));
+            app.goTo().homePage();
+        }
+    }
 
     @DataProvider
     public Iterator<Object[]> validContactsXML() throws IOException {
@@ -60,18 +72,21 @@ public class ContactCreationTests extends TestBase {
 
     @Test(enabled = true, dataProvider = "validContactsJSON")
     public void testContactCreation(ContactData contact) {
+        Groups groups = app.db().groups();
         app.goTo().homePage();
+
+        ContactData newContact = contact.inGroup(groups.iterator().next());
 
         Contacts before = app.db().contacts();
 
-        app.contact().create(contact);
+        app.contact().create(newContact);
 
         assertThat(app.db().contacts().size(), equalTo(before.size() + 1));
 
         Contacts after = app.db().contacts();
 
         assertThat(after, equalTo(
-                before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))
+                before.withAdded(newContact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))
         ));
     }
 
