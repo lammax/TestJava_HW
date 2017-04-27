@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.io.File;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,28 +18,28 @@ public class ContactEmailTests extends TestBase {
    public void ensurePreconditions() {
       app.clickAllert();
 
-      if (app.contact().all().size() == 0) {
+      if (app.db().contacts().size() == 0) {
          app.contact().create(new ContactData()
                  .withName("username")
                  .withLastname("userlastname")
                  .withNick("uu")
                  .withCompany("Home")
-                 .withHomeTel("1111111111")
-                 .withMobile("2222222222222")
-                 .withWorkTel("3333333333")
+                 .withMobile("54245245245")
                  .withEmail1("user@mailserver.com")
                  .withHomepage("http://somewhere.com")
                  .withYear("1985")
                  .withAddress("address")
                  .withTitle("Mr")
-                 .withGroup("test1"));
+                 .withGroup("test1")
+                 .withPhoto(new File(app.properties().getProperty("web.photo")))
+         );
       }
    }
 
    @Test
    public void testContactPhones() {
       app.goTo().homePage();
-      ContactData contact = app.contact().all().iterator().next();
+      ContactData contact = app.db().contacts().iterator().next();
       ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
       assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));

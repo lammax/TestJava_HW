@@ -11,6 +11,7 @@
     <address>address 1</address>
     <title>Mr</title>
     <group>test1</group>
+    <photo>D:\ThisIsMy\Courses\TestJava_HW\src\test\resources\seagal.jpg</photo>
   </contact>
   <contact>
     <name>username 2</name>
@@ -24,6 +25,7 @@
     <address>address 2</address>
     <title>Mr</title>
     <group>test2</group>
+    <photo>D:\ThisIsMy\Courses\TestJava_HW\src\test\resources\seagal.jpg</photo>
   </contact>
   <contact>
     <name>username 3</name>
@@ -37,5 +39,6 @@
     <address>address 3</address>
     <title>Mr</title>
     <group>test3</group>
+    <photo>D:\ThisIsMy\Courses\TestJava_HW\src\test\resources\seagal.jpg</photo>
   </contact>
 </list>

@@ -7,6 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @XStreamAlias("contact")
 @Entity
@@ -90,6 +93,7 @@ public class ContactData {
    @Transient
    private String group;
 
+   @Expose
    @Column(name = "photo")
    @Type(type = "text")
    private String photo;
@@ -99,10 +103,16 @@ public class ContactData {
    }
 
    public String getAllEmails() {
+      if (allEmails == null) {
+         allEmails = Stream.of(emaill, email2, email3).filter((e) -> !e.equals("")).collect(Collectors.joining("\n"));
+      }
       return allEmails;
    }
 
    public String getAllPhones() {
+      if (allPhones == null) {
+         allPhones = Stream.of(homeTel, mobile, workTel).filter((t) -> !t.equals("")).collect(Collectors.joining("\n"));
+      }
       return allPhones;
    }
 
@@ -260,7 +270,7 @@ public class ContactData {
    }
 
    public ContactData withPhoto(File photo) {
-      this.photo = photo.getPath();
+      this.photo = photo.getAbsolutePath();
       return this;
    }
 
@@ -272,13 +282,19 @@ public class ContactData {
       ContactData that = (ContactData) o;
 
       if (id != that.id) return false;
-      return name != null ? name.equals(that.name) : that.name == null;
+      if (name != null ? !name.equals(that.name) : that.name != null) return false;
+      if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+      if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
+      return emaill != null ? emaill.equals(that.emaill) : that.emaill == null;
    }
 
    @Override
    public int hashCode() {
       int result = id;
       result = 31 * result + (name != null ? name.hashCode() : 0);
+      result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+      result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+      result = 31 * result + (emaill != null ? emaill.hashCode() : 0);
       return result;
    }
 
