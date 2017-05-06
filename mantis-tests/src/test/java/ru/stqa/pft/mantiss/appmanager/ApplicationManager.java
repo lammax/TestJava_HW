@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantiss.appmanager;
 
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,27 +41,15 @@ public class ApplicationManager {
       wd.get(properties.getProperty("web.baseUrl"));
    }
 
-   public Properties properties() {
-      return properties;
-   }
-
    public void stop() {
       wd.quit();
    }
 
-   public boolean isAlertPresent() {
-      try {
-         wd.switchTo().alert();
-         return true;
-      } catch (NoAlertPresentException e) {
-         return false;
-      }
+   public HttpSession newSesion() {
+      return new HttpSession(this);
    }
 
-   public void clickAllert() {
-      if (isAlertPresent()) {
-         wd.switchTo().alert().accept();
-      }
+public String getProperty(String key) {
+      return properties.getProperty(key);
    }
-
 }
