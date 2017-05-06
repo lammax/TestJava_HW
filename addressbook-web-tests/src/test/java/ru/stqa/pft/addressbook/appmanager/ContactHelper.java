@@ -177,8 +177,6 @@ public class ContactHelper extends HelperBase {
 
       String allDetailedInfo = Arrays.stream(wd.findElement(By.cssSelector("div[id='content']")).getText().split("[\\r\\n]+")).collect(Collectors.joining("\n"));
 
-      System.out.println(allDetailedInfo);
-
       wd.navigate().back();
 
       return allDetailedInfo;
