@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,10 @@ public class ContactHelper extends HelperBase {
 
    public void submitContactCreation() {
        click(By.xpath("//div[@id='content']/form/input[21]"));
+   }
+
+   public void submitContactAdd2Group() {
+      click(By.cssSelector("input[name='add']"));
    }
 
    public void fillContactForm(ContactData contactData, boolean creation) {
@@ -86,6 +91,13 @@ public class ContactHelper extends HelperBase {
    public void delete(ContactData contact) {
       selectContactById(contact.getId());
       submitContactDeletion();
+      contactCache = null;
+   }
+
+   public void put(ContactData contact, GroupData group) {
+      selectContactById(contact.getId());
+      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroupName());
+      submitContactAdd2Group();
       contactCache = null;
    }
 
@@ -159,29 +171,17 @@ public class ContactHelper extends HelperBase {
       wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
    }
 
-   public ContactData infoFromDetailedForm(ContactData chosenOne) {
+   public String infoFromDetailedForm(ContactData chosenOne) {
 
       openContactDetailedFormById(chosenOne);
 
-      //allFIO(firstname, lastname), address, allEmail, allPhones
+      String allDetailedInfo = Arrays.stream(wd.findElement(By.cssSelector("div[id='content']")).getText().split("[\\r\\n]+")).collect(Collectors.joining("\n"));
 
-      /*username 2 userlastname 2
-      address2
-      M: 542452452452
-      user2@mailserver.com*/
+      System.out.println(allDetailedInfo);
 
-      List<String> allDetailedInfo = Arrays.stream(wd.findElement(By.cssSelector("div[id='content']")).getText().split("[\\r\\n]+")).collect(Collectors.toList());
+      wd.navigate().back();
 
-      String allFio = allDetailedInfo.get(0);
-      String address = allDetailedInfo.get(1);
-      String mobile = allDetailedInfo.get(2).substring(3);
-      String email1 = allDetailedInfo.get(3);
-
-      return new ContactData()
-              .withAllFIO(allFio)
-              .withAddress(address)
-              .withAllEmails(email1)
-              .withAllPhones(mobile);
+      return allDetailedInfo;
 
    }
 
