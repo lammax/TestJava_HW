@@ -19,12 +19,11 @@ public class ContactDetailedInfoTests extends TestBase {
 
       if (app.db().contacts().size() == 0) {
          app.contact().create(new ContactData()
-                         .withName("username")
-                         .withLastname("userlastname")
-                         .withMobile("54245245245")
-                         .withEmail1("user@mailserver.com")
-                         .withAddress("address")
-//                         .withPhoto(new File(app.properties().getProperty("web.photo")))
+             .withName("username")
+             .withLastname("userlastname")
+             .withMobile("54245245245")
+             .withEmail1("user@mailserver.com")
+             .withAddress("address")
          );
          app.goTo().homePage();
       }

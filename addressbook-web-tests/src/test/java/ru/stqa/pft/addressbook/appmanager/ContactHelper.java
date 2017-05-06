@@ -71,6 +71,10 @@ public class ContactHelper extends HelperBase {
       click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
    }
 
+   public void submitContactDeletionFromGroup() {
+      click(By.cssSelector("input[name='remove']"));
+   }
+
    public boolean isThereAContact() {
       return isElementPresent(By.name("selected[]"));
    }
@@ -99,6 +103,12 @@ public class ContactHelper extends HelperBase {
       new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroupName());
       submitContactAdd2Group();
       contactCache = null;
+   }
+
+   public void deleteFromGroup(ContactData contact, GroupData groupFromToDelContact) {
+      new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupFromToDelContact.getGroupName());
+      selectContactById(contact.getId());
+      submitContactDeletionFromGroup();
    }
 
    private Contacts contactCache = null;
@@ -186,4 +196,5 @@ public class ContactHelper extends HelperBase {
    private void openContactDetailedFormById(ContactData chosenOne) {
       wd.findElement(By.cssSelector("a[href='view.php?id=" + chosenOne.getId() + "']")).click();
    }
+
 }
