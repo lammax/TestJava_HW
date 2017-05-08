@@ -23,6 +23,7 @@ public class ApplicationManager {
    private MailHelper mailHelper;
    private AdministratorHelper administratorHelper;
    private DbHelper dbHelper;
+   private JamesHelper jamesHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -91,6 +92,13 @@ public class ApplicationManager {
          administratorHelper = new AdministratorHelper(this);
       }
       return administratorHelper;
+   }
+
+   public JamesHelper james() {
+      if (jamesHelper == null) {
+         jamesHelper = new JamesHelper(this);
+      }
+      return jamesHelper;
    }
 
    public DbHelper db() {

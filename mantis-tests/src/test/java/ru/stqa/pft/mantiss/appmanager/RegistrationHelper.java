@@ -3,6 +3,8 @@ package ru.stqa.pft.mantiss.appmanager;
 import org.openqa.selenium.By;
 import ru.stqa.pft.mantiss.model.UserData;
 
+import javax.mail.MessagingException;
+
 
 public class RegistrationHelper extends HelperBase{
 
@@ -18,8 +20,8 @@ public class RegistrationHelper extends HelperBase{
       click(By.cssSelector("input[value='Зарегистрироваться']"));
    }
 
-   public void finish(UserData user) {
-      wd.get(app.mail().getConfirmationLink(2, user.getEmail()));
+   public void finish(UserData user) throws MessagingException {
+      wd.get(app.mail().getConfirmationLink(1, user));
       type(By.id("realname"), user.getRealname());
       type(By.name("password"), user.getPassword());
       type(By.name("password_confirm"), user.getPassword());

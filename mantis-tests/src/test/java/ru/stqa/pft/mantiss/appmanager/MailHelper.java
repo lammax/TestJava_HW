@@ -5,6 +5,7 @@ import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantiss.model.MailMessage;
+import ru.stqa.pft.mantiss.model.UserData;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -51,9 +52,10 @@ public class MailHelper {
       }
    }
 
-   public String getConfirmationLink(int count, String email) {
-      List<MailMessage> mailMessages = waitForMail(count, 10000);
-      return findConfirmationLink(mailMessages, email);
+   public String getConfirmationLink(int count, UserData user) throws MessagingException {
+      List<MailMessage> mailMessages = app.james().waitForMail(user, 100000);
+//      List<MailMessage> mailMessages = waitForMail(count, 10000);
+      return findConfirmationLink(mailMessages, user.getEmail());
    }
 
    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

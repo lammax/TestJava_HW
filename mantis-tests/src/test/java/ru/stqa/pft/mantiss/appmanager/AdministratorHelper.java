@@ -3,6 +3,8 @@ package ru.stqa.pft.mantiss.appmanager;
 import org.openqa.selenium.By;
 import ru.stqa.pft.mantiss.model.UserData;
 
+import javax.mail.MessagingException;
+
 public class AdministratorHelper extends HelperBase{
 
    public AdministratorHelper(ApplicationManager app) {
@@ -23,8 +25,8 @@ public class AdministratorHelper extends HelperBase{
       click(By.cssSelector("input[value='Сбросить пароль']"));
    }
 
-   public void finishPasswordChange(UserData user) {
-      wd.get(app.mail().getConfirmationLink(1, user.getEmail()));
+   public void finishPasswordChange(UserData user) throws MessagingException {
+      wd.get(app.mail().getConfirmationLink(1, user));
       type(By.id("password"), user.getPassword());
       type(By.id("password-confirm"), user.getPassword());
       click(By.cssSelector("button[type='submit']"));

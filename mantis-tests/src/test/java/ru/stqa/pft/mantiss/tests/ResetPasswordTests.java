@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.mantiss.model.UserData;
 import ru.stqa.pft.mantiss.model.Users;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class ResetPasswordTests extends TestBase {
    }
 
    @Test
-   public void testResetUserPassword() throws IOException {
+   public void testResetUserPassword() throws IOException, MessagingException {
       long now = System.currentTimeMillis();
       String newUserPassword = String.format("password%s", now);
       Users users = app.db().users();
