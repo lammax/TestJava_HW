@@ -1,7 +1,5 @@
 package ru.stqa.pft.mantiss.appmanager;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -22,6 +20,9 @@ public class ApplicationManager {
    String browser = BrowserType.FIREFOX;
    private RegistrationHelper registrationHelper;
    private FtpHelper ftp;
+   private MailHelper mailHelper;
+   private AdministratorHelper administratorHelper;
+   private DbHelper dbHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -77,4 +78,26 @@ public class ApplicationManager {
       }
       return wd;
    }
+
+   public MailHelper mail() {
+      if (mailHelper == null) {
+         mailHelper = new MailHelper(this);
+      }
+      return mailHelper;
+   }
+
+   public AdministratorHelper administrator() {
+      if (administratorHelper == null) {
+         administratorHelper = new AdministratorHelper(this);
+      }
+      return administratorHelper;
+   }
+
+   public DbHelper db() {
+      if (dbHelper == null) {
+         dbHelper = new DbHelper();
+      }
+      return dbHelper;
+   }
+
 }
