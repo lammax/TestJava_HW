@@ -52,9 +52,8 @@ public class MailHelper {
       }
    }
 
-   public String getConfirmationLink(int count, UserData user) throws MessagingException {
-      List<MailMessage> mailMessages = app.james().waitForMail(user, 100000);
-//      List<MailMessage> mailMessages = waitForMail(count, 10000);
+   public String getConfirmationLink(int count, UserData user, boolean isJames) throws MessagingException {
+      List<MailMessage> mailMessages = isJames ? app.james().waitForMail(user, 60000) : waitForMail(count, 10000);
       return findConfirmationLink(mailMessages, user.getEmail());
    }
 

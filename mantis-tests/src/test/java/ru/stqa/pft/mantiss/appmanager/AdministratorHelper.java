@@ -26,7 +26,7 @@ public class AdministratorHelper extends HelperBase{
    }
 
    public void finishPasswordChange(UserData user) throws MessagingException {
-      wd.get(app.mail().getConfirmationLink(1, user));
+      wd.get(app.mail().getConfirmationLink(1, user, false));
       type(By.id("password"), user.getPassword());
       type(By.id("password-confirm"), user.getPassword());
       click(By.cssSelector("button[type='submit']"));

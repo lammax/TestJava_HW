@@ -1,49 +1,36 @@
 package ru.stqa.pft.mantiss.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
+import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import org.testng.annotations.Test;
+import ru.stqa.pft.mantiss.model.IssuesData;
 import ru.stqa.pft.mantiss.model.UserData;
 import ru.stqa.pft.mantiss.model.Users;
 
+import javax.xml.rpc.ServiceException;
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.sql.*;
 
-public class DbConnectionTest {
+public class DbConnectionTest extends TestBase {
 
    @Test
-   public void testDbConnection() {
-      Connection conn = null;
+   public void testDbConnection() throws RemoteException, ServiceException, MalformedURLException {
 
-      try {
-         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bugtracker?serverTimezone=UTC&user=root&password=");
-
-         Statement st = conn.createStatement();
-
-         ResultSet rs = st.executeQuery("select id, username, realname, email, password from mantis_user_table");
-
-         Users users = new Users();
-
-         while (rs.next()) {
-            users.add(
-               new UserData()
-                       .withId(rs.getInt("id"))
-                       .withUsername(rs.getString("username"))
-                       .withRealname(rs.getString("realname"))
-                       .withEmail(rs.getString("email"))
-                       .withPassword(rs.getString("password"))
-            );
-         }
-
-         rs.close();
-         st.close();
-         conn.close();
-
-         System.out.println(users);
-
-      } catch (SQLException ex) {
-         // handle any errors
-         System.out.println("SQLException: " + ex.getMessage());
-         System.out.println("SQLState: " + ex.getSQLState());
-         System.out.println("VendorError: " + ex.getErrorCode());
+      for (IssuesData i : app.db().issues()) {
+         System.out.println(i);
+         System.out.println(isIssueOpen(i.getId()));
       }
+
    }
+
+   private String isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+      MantisConnectPortType mc = app.soap().getMantisConnect();
+      IssueData gotIssueData = mc.mc_issue_get(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"), BigInteger.valueOf(issueId));
+
+      return gotIssueData.getStatus().getName();
+   }
+
 
 }

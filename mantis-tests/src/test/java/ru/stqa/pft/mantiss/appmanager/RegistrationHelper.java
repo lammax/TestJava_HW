@@ -21,7 +21,7 @@ public class RegistrationHelper extends HelperBase{
    }
 
    public void finish(UserData user) throws MessagingException {
-      wd.get(app.mail().getConfirmationLink(1, user));
+      wd.get(app.mail().getConfirmationLink(1, user, true));
       type(By.id("realname"), user.getRealname());
       type(By.name("password"), user.getPassword());
       type(By.name("password_confirm"), user.getPassword());

@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.stqa.pft.mantiss.model.Issues;
+import ru.stqa.pft.mantiss.model.IssuesData;
 import ru.stqa.pft.mantiss.model.UserData;
 import ru.stqa.pft.mantiss.model.Users;
 
@@ -32,4 +34,13 @@ public class DbHelper {
       return new Users(result);
    }
 
+   public Issues issues() { //TODO
+      Session session = sessionFactory.openSession();
+      session.beginTransaction();
+      List<IssuesData> result = session.createQuery( "from IssuesData" ).list();
+      session.getTransaction().commit();
+      session.close();
+
+      return new Issues(result);
+   }
 }
