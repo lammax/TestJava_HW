@@ -84,12 +84,13 @@ public class ResetPasswordTests extends TestBase {
                    e.printStackTrace();
                 }
 
-                boolean b = Arrays.stream(issueWithNeededTag.getTags())
+                boolean isIssueOpen = !(issueWithNeededTag.getStatus().getName().equals("closed"));
+                boolean issueHasNeededTag = Arrays.stream(issueWithNeededTag.getTags())
                         .map((t) -> {System.out.println( t.getName()); return t;})
                         .filter((t) -> t.getName().equals(tagData.getName()))
                         .collect(Collectors.toList())
                         .size() > 0;
-                return b;
+                return isIssueOpen && issueHasNeededTag;
              })
             .collect(Collectors.toList())
             .iterator()
