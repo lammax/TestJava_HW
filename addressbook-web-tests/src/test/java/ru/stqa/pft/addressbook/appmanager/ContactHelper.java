@@ -157,6 +157,7 @@ public class ContactHelper extends HelperBase {
       String homeTel = getValue(By.name("home"));
       String mobile = getValue(By.name("mobile"));
       String workTel = getValue(By.name("work"));
+      String fax = getValue(By.name("fax"));
       String address = getValue(By.name("address"));
       String email1 = getValue(By.name("email"));
       String email2 = getValue(By.name("email2"));
@@ -171,6 +172,7 @@ public class ContactHelper extends HelperBase {
               .withHomeTel(homeTel)
               .withMobile(mobile)
               .withWorkTel(workTel)
+              .withFax(fax)
               .withAddress(address)
               .withEmail1(email1)
               .withEmail2(email2)

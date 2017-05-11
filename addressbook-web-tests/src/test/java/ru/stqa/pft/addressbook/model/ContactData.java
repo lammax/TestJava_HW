@@ -51,6 +51,10 @@ public class ContactData {
    @Type(type = "text")
    private String workTel;
 
+   @Column(name = "fax")
+   @Type(type = "text")
+   private String fax;
+
    @Transient
    private String allPhones;
 
@@ -125,7 +129,7 @@ public class ContactData {
 
    public String getAllPhones() {
       if (allPhones == null) {
-         allPhones = Stream.of(homeTel, mobile, workTel).filter((t) -> !t.equals("")).collect(Collectors.joining("\n"));
+         allPhones = Stream.of(homeTel, mobile, workTel, fax).filter((t) -> !t.equals("")).collect(Collectors.joining("\n"));
       }
       return allPhones;
    }
@@ -192,6 +196,10 @@ public class ContactData {
 
    public int getId() {
       return id;
+   }
+
+   public String getFax() {
+      return fax;
    }
 
    public ContactData withId(int id) {
@@ -283,6 +291,11 @@ public class ContactData {
       return this;
    }
 
+   public ContactData withFax(String fax) {
+      this.fax = fax;
+      return this;
+   }
+
    public ContactData inGroup(GroupData group) {
       this.groups.add(group);
       return this;
@@ -293,6 +306,20 @@ public class ContactData {
       return this;
    }
 
+   @Override
+   public String toString() {
+      return "ContactData{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              ", lastname='" + lastname + '\'' +
+              ", mobile='" + mobile + '\'' +
+              ", homeTel='" + homeTel + '\'' +
+              ", workTel='" + workTel + '\'' +
+              ", fax='" + fax + '\'' +
+              ", emaill='" + emaill + '\'' +
+              ", address='" + address + '\'' +
+              '}';
+   }
 
    @Override
    public boolean equals(Object o) {
@@ -305,7 +332,11 @@ public class ContactData {
       if (name != null ? !name.equals(that.name) : that.name != null) return false;
       if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
       if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
-      return emaill != null ? emaill.equals(that.emaill) : that.emaill == null;
+      if (homeTel != null ? !homeTel.equals(that.homeTel) : that.homeTel != null) return false;
+      if (workTel != null ? !workTel.equals(that.workTel) : that.workTel != null) return false;
+      if (fax != null ? !fax.equals(that.fax) : that.fax != null) return false;
+      if (emaill != null ? !emaill.equals(that.emaill) : that.emaill != null) return false;
+      return address != null ? address.equals(that.address) : that.address == null;
    }
 
    @Override
@@ -314,19 +345,11 @@ public class ContactData {
       result = 31 * result + (name != null ? name.hashCode() : 0);
       result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
       result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+      result = 31 * result + (homeTel != null ? homeTel.hashCode() : 0);
+      result = 31 * result + (workTel != null ? workTel.hashCode() : 0);
+      result = 31 * result + (fax != null ? fax.hashCode() : 0);
       result = 31 * result + (emaill != null ? emaill.hashCode() : 0);
+      result = 31 * result + (address != null ? address.hashCode() : 0);
       return result;
    }
-
-   @Override
-   public String toString() {
-      return "ContactData{" +
-              "id=" + id +
-              ", name='" + name + '\'' +
-              ", lastname='" + lastname + '\'' +
-              ", mobile='" + mobile + '\'' +
-              ", email='" + emaill + '\'' +
-              '}';
-   }
-
 }
