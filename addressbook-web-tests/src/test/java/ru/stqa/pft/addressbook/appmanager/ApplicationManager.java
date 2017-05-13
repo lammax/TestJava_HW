@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -54,6 +55,8 @@ public class ApplicationManager {
       } else {
          DesiredCapabilities capabilities = new DesiredCapabilities();
          capabilities.setBrowserName(browser);
+//         https://github.com/SeleniumHQ/selenium/blob/master/java/client/src/org/openqa/selenium/Platform.java
+         capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
          wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
       }
 
