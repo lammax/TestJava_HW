@@ -2,10 +2,8 @@ package ru.stqa.pft.addressbook.tests;
 
 
 import org.openqa.selenium.remote.BrowserType;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 
 import org.slf4j.Logger;
@@ -23,17 +21,17 @@ import java.util.stream.Stream;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 
-
+@Listeners(MyTestListener.class)
 public class TestBase {
 
    protected final static Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-   protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX));
+   protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
    @BeforeSuite
-   public void setUp() throws Exception {
+   public void setUp(ITestContext testContext) throws Exception {
       app.init();
-
+      testContext.setAttribute("app", app);
    }
 
    @AfterSuite(alwaysRun = true)

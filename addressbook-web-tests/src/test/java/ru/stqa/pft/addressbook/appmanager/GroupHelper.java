@@ -17,7 +17,7 @@ public class GroupHelper extends HelperBase {
    }
 
    public void returnToGroupPage() {
-      click(By.linkText("group page"));
+      click(By.cssSelector("a[href='group.php']"));
    }
 
    public void submitGroupCreation() {
