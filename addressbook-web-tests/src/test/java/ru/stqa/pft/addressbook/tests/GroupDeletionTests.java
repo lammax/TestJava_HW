@@ -36,7 +36,7 @@ public class GroupDeletionTests extends TestBase {
 
    }
 
-   @Test
+   @Test(enabled=false)
    public void testGroupDeletionNeg() {
 
       Groups before = app.db().groups();
