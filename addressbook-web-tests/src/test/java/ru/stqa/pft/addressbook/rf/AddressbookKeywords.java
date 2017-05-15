@@ -29,9 +29,6 @@ public class AddressbookKeywords {
    }
 
    public void createGroup(String name, String header, String footer) {
-      System.out.println(">>> name = " + name);
-      System.out.println(">>> header = " + header);
-      System.out.println(">>> footer = " + footer);
       app.goTo().groupPage();
       app.group().create(new GroupData().withName(name).withHeader(header).withFooter(footer));
    }
